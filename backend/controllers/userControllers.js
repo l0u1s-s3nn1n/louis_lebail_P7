@@ -25,7 +25,7 @@ const saveUser = async (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-  await User.create(profile).then(() => {
+  await User.create(user).then(() => {
     res.sendStatus(201);
   });
 };

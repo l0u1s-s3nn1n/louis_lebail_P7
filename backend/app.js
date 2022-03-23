@@ -51,6 +51,11 @@ app.use(
   })
 );
 
+app.get("/", (req, resp) => resp.send("application is up and running"));
+ 
+app.use("/api", userRoutes.routes);
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -66,9 +71,6 @@ app.use((req, res) => {
 });
 
 
-app.get("/", (req, resp) => resp.send("application is up and running"));
- 
-app.use("/api", userRoutes.routes);
 
 //app.use("/api/user", userRoutes);
 //app.use("/api/post", postRoutes);

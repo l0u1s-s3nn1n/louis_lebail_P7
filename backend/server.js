@@ -14,6 +14,8 @@ const normalizePort = val => {
   }
   return false;
 };
+
+
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -46,4 +48,6 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+server.listen(port, () => {
+  console.log(`Service endpoint = http://localhost:${port}`);
+});

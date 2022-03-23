@@ -23,7 +23,7 @@ const saveUser = async (req, res) => {
   const user = {
     name: req.body.name,
     email: req.body.email,
-    phone: req.body.phone
+    password: req.body.password
   };
   await User.create(profile).then(() => {
     res.sendStatus(201);
@@ -38,7 +38,7 @@ const updateUser = async (req, res) => {
         .update({
           name: req.body.name,
           email: req.body.email,
-          phone: req.body.phone
+          password: req.body.password
         })
         .then(() => {
           res.sendStatus(204);

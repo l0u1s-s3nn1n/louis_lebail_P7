@@ -6,12 +6,17 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require('path');
 const dotenv = require("dotenv");
-
+const sequelize = require("./database/database");
+const Profile = require("./models/userModels");
 //const userRoutes = require("./routes/userRoutes");
 //const postRoutes = require("./routes/postRoutes");
 //const commentRoutes = require("./routes/commentRoutes");
 
 dotenv.config();
+
+
+
+
 
 app.use(cors());
 

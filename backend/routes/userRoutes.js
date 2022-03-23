@@ -30,7 +30,6 @@ router.post("/User", saveUser);
 {
     "name": "{{$randomFullName}}",
     "email": "{{$randomEmail}}",
-    "phone": "{{$randomPhoneNumber}}"
 }
 */
 router.put("/user/:id", updateUser);

@@ -15,10 +15,13 @@ User.init(
     email: {
       type: DataTypes.STRING
     },
+    password: {
+      type: DataTypes.STRING
+    },
   },
   {
     sequelize,
-    modelName: "profile",
+    modelName: "user",
     timestamps: false
   }
 );

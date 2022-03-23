@@ -1,3 +1,20 @@
+const sequelize = require("./database/database");
+const User = require("./models/userModels");
+ 
+// default loading data
+sequelize.sync({ force: true }).then(async () => {
+  console.log("db is ready... inserting sample data...");
+  for (let i = 1; i < 11; i++) {
+    let num = Math.floor(Math.random() * 9000000000) + 1000000000;
+    const user = {
+      name: `user${i}`,
+      email: `user${i}@automation.com`,
+    };
+    await User.create(user);
+  }
+  console.log("sample data inserted...");
+});
+
 const express = require('express');
 
 const app = express();
@@ -6,8 +23,13 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require('path');
 const dotenv = require("dotenv");
-const sequelize = require("./database/database");
-const Profile = require("./models/userModels");
+const userRoutes = require("./routes/userRoutes");
+
+
+
+
+
+
 //const userRoutes = require("./routes/userRoutes");
 //const postRoutes = require("./routes/postRoutes");
 //const commentRoutes = require("./routes/commentRoutes");
@@ -43,6 +65,10 @@ app.use((req, res) => {
    res.json({ message: 'Votre requête a bien été reçue !' }); 
 });
 
+
+app.get("/", (req, resp) => resp.send("application is up and running"));
+ 
+app.use("/api", userRoutes.routes);
 
 //app.use("/api/user", userRoutes);
 //app.use("/api/post", postRoutes);

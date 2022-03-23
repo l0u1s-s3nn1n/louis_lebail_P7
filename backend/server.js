@@ -1,4 +1,6 @@
 const http = require('http');
+const sequelize =('./database/database')
+
 const app = require('./app');
 
 const normalizePort = val => {

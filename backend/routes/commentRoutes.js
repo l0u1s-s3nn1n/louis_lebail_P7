@@ -1,5 +1,3 @@
-/// "routes/sauce.js" : routes pour "sauce"
-
 //package "express"
 const express = require("express");
 
@@ -7,21 +5,17 @@ const express = require("express");
 const router = express.Router();
 
 // "auth.js" pour la vérification des tokens
-const auth = require("../middlewares/auth");
-
-//"multer-config" pour les "images"
-const multer = require("../middlewares/multer-config");
+const auth = require("../middlewares/authMiddlewares");
 
 //controllers/sauce
-const messagesCtrl = require("../controllers/sauce");
+const commentController = require("../controllers/commentControllers");
 
 //routes pour "sauce"
-router.get("/", auth, messagesCtrl.getAllSauces);
-router.get("/:id", auth, messagesCtrl.getOneSauce);
-router.post("/", auth, multer, messagesCtrl.createSauce);
-router.put("/:id", auth, multer, messagesCtrl.modifySauce);
-router.delete("/:id", auth, messagesCtrl.deleteSauce);
-//router.post("/:id/like", messagesCtrl.modifyLikeSauce);
+router.get("/:id/", auth, commentController.getAllComment);
+router.post("/", auth, multer, commentController.createComment);
+router.put("/:id", auth, multer, commentController.modifyComment);
+router.delete("/:id", auth, commentController.deleteComment);
+//router.post("/:id/like", commentController.modifyLikeComment);
 
 //exportation router
 module.exports = router;

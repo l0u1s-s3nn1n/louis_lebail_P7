@@ -1,7 +1,7 @@
 const sequelize = require("./database/database");
 const User = require("./models/userModels");
  
-// default loading data
+/* default loading data
 sequelize.sync({ force: true }).then(async () => {
   console.log("db is ready... inserting sample data...");
   for (let i = 1; i < 11; i++) {
@@ -13,7 +13,7 @@ sequelize.sync({ force: true }).then(async () => {
     await User.create(user);
   }
   console.log("sample data inserted...");
-});
+});*/
 
 const express = require('express');
 

@@ -1,3 +1,7 @@
+//Protéger route post et messages et dans user : getall getone update delete
+//non protégé conexion et ajout user.
+//modérateur.
+
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 

@@ -41,10 +41,10 @@ const updateUser = async (req, res) => {
           password: req.body.password
         })
         .then(() => {
-          res.sendStatus(204);
+         return res.json({ mess: "utilisateur modifié!" });
         });
     } else {
-      res.sendStatus(404);
+      return res.status(404).send( {mess: "utilisateur non trouvé"} );;
     }
   });
 };
@@ -54,9 +54,9 @@ const deleteUser = async (req, res) => {
   await User.findByPk(id).then((item) => {
     if (item != null) {
       item.destroy();
-      res.sendStatus(200);
+      return res.json({ mess: "utilisateur supprimé!" });
     } else {
-      res.sendStatus(404);
+      return res.status(404).send( {mess: "utilisateur non trouvé"} );;
     }
   });
 };

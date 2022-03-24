@@ -9,23 +9,22 @@ const {
  
 const router = express.Router();
  
-// http://localhost:3005/api/profiles
+// http://localhost:3000/api/users
 router.get("/users", getAllUsers);
  
-// http://localhost:3005/api/profile/id
+// http://localhost:3000/api/user/id
 router.get("/user/:id", getUser);
  
-// http://localhost:3005/api/profile
+// http://localhost:3000/api/user
 /*
 {
     "name": "{{$randomFullName}}",
     "email": "{{$randomEmail}}",
-    "phone": "{{$randomPhoneNumber}}"
 }
 */
 router.post("/User", saveUser);
  
-// http://localhost:3005/api/profile/id
+// http://localhost:3000/api/user/id
 /*
 {
     "name": "{{$randomFullName}}",
@@ -34,7 +33,7 @@ router.post("/User", saveUser);
 */
 router.put("/user/:id", updateUser);
  
-// http://localhost:3005/api/profile/id
+// http://localhost:3000/api/user/id
 router.delete("/user/:id", deleteUser);
  
 module.exports = {

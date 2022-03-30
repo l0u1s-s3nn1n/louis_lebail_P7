@@ -32,7 +32,6 @@ module.exports = User;
     dialect: 'sqlite',
     storage: 'path/to/database.sqlite'
   });
-
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');

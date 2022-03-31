@@ -1,11 +1,10 @@
 import React from 'react';
-//import {Link} from 'react-router-dom';
-import Navigation from '../components/Navigation';
+import NavBar from '../components/NavBar';
 
 const Signup = () => {
     return (
         <div className='signup'>
-            <Navigation/>
+            <NavBar/>
             <div className='signupContent'>
                 <div className='content'>
                         
@@ -16,4 +15,4 @@ const Signup = () => {
     );
 };
 
-export default Signup ;
+export default Signup;

@@ -1,13 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-
-const Navigation = () => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+const NavBar = () => {
     return (
         
 <div className='sidebar'>
     <div className='logo'>
         <div className='logoContent'>
-            <img src='./media/logo192.png' alt='logo-pic'></img>
+            <img src='../media/icon-left-font-monochrome-white.svg' alt='logo-pic'></img>
         </div>
     </div>
 
@@ -16,19 +16,20 @@ const Navigation = () => {
             <li>
                 <Link exact="true" to='/'  className="navActive">
                     <i className='fas fa-home'></i>
-                    <span>Accueil</span>
+                    <span> Accueil</span>
                 </Link>
             </li>
             <li>
                 <Link exact="true" to="/login" className="navActive">
-                    <i className=''></i>
+                    <i className='fas fa-user'></i>
                     <span>Se connecter</span>
                 </Link>
             </li>
             <li>
                 <Link exact="true" to="/signup" className="navActive">
-                    <i className=''></i>
-                    <span>S'inscrire</span>
+                <i><FontAwesomeIcon icon={['fab', 'apple']} /></i>
+
+                <span>S'inscrire</span>
                 </Link>
             </li>
             <li>
@@ -44,4 +45,4 @@ const Navigation = () => {
     );
 }; 
 
-export default Navigation;
+export default NavBar;

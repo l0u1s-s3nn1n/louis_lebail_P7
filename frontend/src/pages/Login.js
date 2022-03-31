@@ -1,11 +1,10 @@
 import React from 'react';
-//import {Link} from 'react-router-dom';
-import Navigation from '../components/Navigation';
+import NavBar from '../components/NavBar';
 
 const Login = () => {
     return (
         <div className='login'>
-            <Navigation/>
+         <NavBar/>
             <div className='loginContent'>
                 <div className='content'>
                         

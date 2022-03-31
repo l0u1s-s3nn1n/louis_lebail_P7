@@ -1,5 +1,5 @@
-.login {
-    .loginContent {
+.profile {
+    .profileContent {
         min-height: $minHeight;
         width: 100%;
         position: relative;
@@ -45,12 +45,12 @@
 }
 
 @media screen and (max-width: 850px){
-    .loginContent {
+    .profileContent {
       margin: 0 !important;
     }
   }
   @media screen and (max-width:580px){
-    .loginContent {
+    .profileContent {
       h1 {
         font-size: 3rem !important;
       }

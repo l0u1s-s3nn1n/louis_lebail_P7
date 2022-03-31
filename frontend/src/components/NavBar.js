@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 const NavBar = () => {
     return (
         
@@ -21,21 +21,20 @@ const NavBar = () => {
             </li>
             <li>
                 <Link exact="true" to="/login" className="navActive">
-                    <i className='fas fa-user'></i>
+                    <i className='fas fa-sign-in-alt'></i>
                     <span>Se connecter</span>
                 </Link>
             </li>
             <li>
                 <Link exact="true" to="/signup" className="navActive">
-                <i><FontAwesomeIcon icon={['fab', 'apple']} /></i>
-
+                <i className='fas fa-user-plus'></i>
                 <span>S'inscrire</span>
                 </Link>
             </li>
             <li>
                 <Link exact="true" to="/profile" className="navActive">
-                    <i className=''></i>
-                    <span>Mon profil</span>
+                <i className='far fa-user-circle'></i>
+                <span>Mon profil</span>
                 </Link>
             </li>
         </ul>

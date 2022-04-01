@@ -29,10 +29,13 @@
                     display: flex;
                     justify-content: space-around;
                     @include verticalCenter;
-                    color: white;
+                    color: $lightgrey;
+                    opacity: 0.8;
+                    border-bottom: 2px solid $color-1;
+
                     &:hover {
-                        font-size: larger;
                         color: white;
+                        border-bottom: 2px solid white;
                         opacity: 1;
                         transition: 0.3s;
                       }

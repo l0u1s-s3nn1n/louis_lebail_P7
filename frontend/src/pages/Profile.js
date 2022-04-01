@@ -1,18 +1,21 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
+import Profile from '../components/ProfileForm';
 
-const Profile = () => {
+const Profil = () => {
     return (
-        <div className='profile'>
-            <NavBar/>
-            <div className='profileContent'>
+        <div className='login'>
+            <NavBar/> 
+            <div className='loginContent'>
+                
                 <div className='content'>
-                        
-                   
-                    </div>
+                    <Profile/>
                 </div>
             </div>
+        </div>
+            
+    
     );
 };
 
-export default Profile;
+export default Profil;

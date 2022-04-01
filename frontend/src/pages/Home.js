@@ -1,6 +1,7 @@
 import React from 'react';
 
 import NavBar from '../components/NavBar';
+import Timeline from '../components/Timeline';
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
             <NavBar/>
             <div className='homeContent'>
                 <div className='content'>
-                        
+                <Timeline/>
                    
                     </div>
                 </div>

@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 const NotFound = () => {
     return (
-        <div className='notFound'>
-            <div className='notFoundContent'>
-                <h3>Désolé, cette page n'éxiste pas!</h3>
-                <Link to="/" exact>
-                    <i className='fa fa-home'></i>
-                    <span>Retour à l'accueil</span>
-                </Link>
+        <div className='notfound'>
+            <NavBar/> 
+            <div className='notfoundContent'>
+            <h1>Erreur, page non trouvée</h1>
+                <div className='content'>
+                    <Link exact="true" to='/'  className="navActive">
+                    <i className='fas fa-home'></i>
+                    <span> Retour à l'accueil</span>
+                    </Link>
+                </div>
             </div>
-        </div>   
+        </div>
+            
+    
     );
 };
 

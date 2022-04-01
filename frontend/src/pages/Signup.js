@@ -1,18 +1,20 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
+import SignUpForm from '../components/SignUpForm';
 
-const Signup = () => {
+const SignUp = () => {
     return (
-        <div className='signup'>
-            <NavBar/>
-            <div className='signupContent'>
+        <div className='login'>
+            <NavBar/> 
+            <div className='loginContent'>
                 <div className='content'>
-                        
-                   
-                    </div>
+                    <SignUpForm/>
                 </div>
             </div>
+        </div>
+            
+    
     );
 };
 
-export default Signup;
+export default SignUp;

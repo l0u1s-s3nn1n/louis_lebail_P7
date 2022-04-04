@@ -1,21 +1,12 @@
-//package "express"
 const express = require("express");
-
-//"router" pour les routes "sauce"
+const auth = require("../middlewares/authMiddlewares");
+const commentCtrl = require("../controllers/commentControllers");
 const router = express.Router();
 
-// "auth.js" pour la vérification des tokens
-const auth = require("../middlewares/authMiddlewares");
+// Routes
 
-//controllers/sauce
-const commentController = require("../controllers/commentControllers");
+router.post("/:id/comment", auth, commentCtrl.createComment);
+router.get("/:id/comments", auth, commentCtrl.getComments);
+router.delete("/:id/comment/:id", auth, commentCtrl.deleteComment);
 
-//routes pour "sauce"
-router.get("/:id/", auth, commentController.getAllComment);
-router.post("/", auth, multer, commentController.createComment);
-router.put("/:id", auth, multer, commentController.modifyComment);
-router.delete("/:id", auth, commentController.deleteComment);
-//router.post("/:id/like", commentController.modifyLikeComment);
-
-//exportation router
 module.exports = router;

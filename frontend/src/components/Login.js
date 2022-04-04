@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import SignUp from "../pages/Signup";
 
-const SignUpForm = () => {
+const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: "onChange"
   });
@@ -24,13 +23,7 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleRegistration, handleError)}>
-      <div>
-        <label>Name</label>
-        <input name="name" type="text" {...register('name', registerOptions.name) }/>
-        <small className="text-danger">
-          {errors?.name && errors.name.message}
-        </small>
-      </div>
+      
       <div>
         <label>Email</label>
         <input
@@ -57,4 +50,4 @@ const SignUpForm = () => {
     </form>
   );
 };
-export default SignUpForm;
+export default LoginForm;

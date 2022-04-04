@@ -1,0 +1,23 @@
+{
+	"development": {
+		"username": "user",
+		"password": "pass",
+		"database": "groupomania_development",
+		"host": "./database/bdd.sqlite",
+		"dialect": "sqlite"
+	},
+	"test": {
+		"username": "user",
+		"password": "process.env.DB_PASSWORD",
+		"database": "groupomania_test",
+		"host": "./database/bdd.sqlite",
+		"dialect": "sqlite"
+	},
+	"production": {
+		"username": "user",
+		"password": "process.env.DB_PASSWORD",
+		"database": "groupomania_production",
+		"host": "./database/bdd.sqlite",
+		"dialect": "sqlite"
+	}
+}

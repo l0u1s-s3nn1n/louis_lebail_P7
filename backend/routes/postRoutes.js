@@ -1,14 +1,15 @@
-const router = require("express");
-const router = express.Router();
-// "auth.js" pour la vérification des tokens
+const express = require("express");
+const postsCtrl = require("../controllers/postControllers");
 const auth = require("../middlewares/authMiddlewares");
-
-const postController = require("../controllers/postControllers");
 const multer = require("../middlewares/multerMiddlewares");
 
-router.get("/", postController.getAllPosts);
-router.get("/:id", postController.getOnePost);
-router.put("/:id", postController.updatePost);
-router.delete("/:id", postController.deletePost);
+const router = express.Router();
+
+// Routes
+router.post("/new", auth, multer, postsCtrl.createPost);
+router.get("/getPosts", auth, multer, postsCtrl.getAllPosts);
+router.get("/user/:id", auth, multer, postsCtrl.getPostProfile);
+router.delete("/:id", auth, multer, postsCtrl.deletePost);
+router.put("/:id/moderate", postsCtrl.moderatePost);
 
 module.exports = router;

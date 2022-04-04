@@ -1,14 +1,38 @@
-const express = require("express");
-const router = express.Router();
-
-const commentController = require("../controllers/commentControllers");
-const auth = require("../middlewares/authMiddlewares");
-
-
-
-router.post("/:id", auth, commentController.newComment);e
-router.get("/:id", auth, commentController.getAllPostComments);
-router.put("/:id", auth, commentController.modifyComment);
-router.delete("/:id", auth, postController.deletePost); 
- 
-module.exports = router;
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+	class Comment extends Model {
+		/**
+		 * Helper method for defining associations.
+		 * This method is not a part of Sequelize lifecycle.
+		 * The `models/index` file will call this method automatically.
+		 */
+		static associate(models) {
+			// define association here
+			models.Comment.belongsTo(models.User, {
+				foreignKey: {
+					allowNull: false
+				}
+			});
+			models.Comment.belongsTo(
+				models.Post,
+				{
+					foreignKey: {
+						allowNull: false
+					}
+				},
+				{ onDelete: "cascade" }
+			);
+		}
+	}
+	Comment.init(
+		{
+			comments: DataTypes.STRING
+		},
+		{
+			sequelize,
+			modelName: "Comment"
+		}
+	);
+	return Comment;
+};

@@ -1,4 +1,26 @@
-//Protéger route post et messages et dans user : getall getone update delete
+const jwt = require("jsonwebtoken");
+const models = require("../models");
+
+module.exports = async (req, res, next) => {
+	try {
+		const token = req.headers.authorization.split(" ")[1];
+		const decodedToken = jwt.verify(token, "SECRET_KEY");
+		const user = await models.User.findOne({ where: { id: decodedToken.id } });
+		if (!user) {
+			throw new Error("invalid");
+		}
+		req.user = user;
+		next();
+	} catch (err) {
+		res.status(401).json({ error: "Besoin d'un token" });
+	}
+};
+
+
+
+
+
+/*//Protéger route post et messages et dans user : getall getone update delete
 //non protégé conexion et ajout user.
 //modérateur.
 
@@ -27,3 +49,4 @@ module.exports = (req, res, next) => {
     res.status(401).json({ error: new Error("Requête non authentifiée !") });
   }
 };
+*/

@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import NavBar from '../components/NavBar';
 import Profile from '../components/ProfileForm';
 
@@ -18,4 +18,4 @@ const Profil = () => {
     );
 };
 
-export default Profil;
+export default Profil;*/

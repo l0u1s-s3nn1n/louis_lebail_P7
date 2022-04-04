@@ -1,6 +1,6 @@
-import React from 'react';
+/*import React from 'react';
 import NavBar from '../components/NavBar';
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from '../components/SignUp';
 
 const SignUp = () => {
     return (
@@ -17,4 +17,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default SignUp;*/ 

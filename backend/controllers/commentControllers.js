@@ -1,78 +1,112 @@
-const models = require("../models");
-const fs = require("fs");
+//Import models
+const User = require("../models/userModel");
+const Comment = require("../models/commentModel");
 
-exports.createComment = async (req, res) => {
-	try {
-		let comments = req.body.comments;
-		const newCom = await models.Comment.create({
-			comments: comments,
-			UserId: req.user.id,
-			PostId: req.params.id
-		});
+//comment appartient à user
+Comment.belongsTo(User, { as: "user" });
 
-		if (newCom) {
-			res.status(201).json({ message: "Commentaire envoyé", newCom });
-		} else {
-			throw new Error("Erreur, commentaire non posté");
-		}
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+//Création d'un commentaire
+exports.createComment = (req, res, next) => {
+  const comment = {
+    uuid: req.body.uuid,
+    postId: req.body.postId,
+    text: req.body.text,
+    userId: req.auth.userId,
+  };
+  Comment.create(comment)
+    .then((comment) => {
+      res
+        .status(201)
+        .json({
+          message: "Commentaire posté",
+          id: comment.id,
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+        });
+    })
+    .catch((error) => res.status(400).json({ error }));
 };
 
-exports.getComments = async (req, res) => {
-	try {
-		const order = req.query.order;
-		const comments = await models.Comment.findAll({
-			attributes: [
-				"id",
-				"comments",
-				"UserId",
-				"PostId",
-				"createdAt",
-				"updatedAt"
-			],
-			order: [order != null ? order.split(":") : ["createdAt", "DESC"]],
-			where: { postId: req.params.id },
-			include: [{ model: models.User, attributes: ["username"] }]
-		});
-		if (comments) {
-			res.status(200).send({ message: comments });
-		} else {
-			throw new Error("Il n'y a pas de commentaires");
-		}
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+//Récupérer l'ensemble des commentaires d'un user
+exports.getAllComments = (req, res, next) => {
+  Comment.findAll({
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["username"],
+      },
+    ],
+    attributes: [
+      "id",
+      "uuid",
+      "text",
+      "postsId",
+      "createdAt",
+      "updatedAt",
+    ],
+    order: [["createdAt", "ASC"]],
+  })
+    .then((comments) => res.status(200).json(comments))
+    .catch((error) => res.status(404).json({ error }));
 };
 
-// future project
+exports.checkPreviousComment = (req, res, next) => {
+  id = req.params.id;
 
-exports.deleteComment = async (req, res) => {
-	try {
-		const commentFound = await models.Comment.findOne({
-			attributes: [
-				"id",
-				"comments",
-				"UserId",
-				"PostId",
-				"createdAt",
-				"updatedAt"
-			],
-			where: { id: req.params.id }
-		});
-
-		if (!commentFound) {
-			throw new Error("Commentaire introuvable");
-		}
-
-		await models.Comment.destroy({
-			where: { id: req.params.id }
-		});
-		res.status(200).json({ message: "Commentaire supprimé " });
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+  try {
+    Comment.findOne({ where: { id: id } })
+      .then((comment) => {
+        if (!comment) {
+          throw "Commentaire introuvable";
+        }
+        if (req.auth.uuid !== comment.uuid && req.auth.isAdmin === false) {
+          throw "Accès refusé (non admin)";
+        } else {
+          next();
+        }
+      })
+      .catch((error) => {
+        res.status(401).json(error);
+      });
+  } catch (error) {
+    res.status(401).json({ error: error || "Erreur" });
+  }
 };
-// UPDATE PROJECT FOR FUTURE
-exports.answerComment = async (req, es) => {};
+
+
+//Modifier un commentaire
+exports.modifyComment = (req, res, next) => {
+  id = req.params.id;
+  Comment.update(
+    { text: req.body.text },
+    {
+      where: {
+        id: id,
+      },
+    }
+  )
+    .then(() => {
+      return Comment.findOne({ where: { id: id } });
+    })
+    .then((comment) => {
+      res.status(200).send({
+        message: "Commentaire modifié",
+        text: comment.text,
+        updatedAt: comment.updatedAt,
+      });
+    })
+    .catch((error) => res.status(404).json({ error }));
+};
+
+//Supprimer un commentaire
+exports.deleteComment = (req, res, next) => {
+  id = req.params.id;
+  Comment.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then(() => res.status(200).send("Commentaire supprimé"))
+    .catch((error) => res.status(404).json({ error }));
+};

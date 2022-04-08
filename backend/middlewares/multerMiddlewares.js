@@ -1,31 +1,24 @@
-//package "multer" 
-const multer = require("multer");
+//Import
+const multer = require("multer");//permet de gérer les fichiers entrants dans les requêtes HTTP
 
-//MIME_TYPES pour l'extension des fichiers
+//Paramaètrage du type de fichiers acceptés
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
   "image/png": "png",
-  "image/gif": "gif",
+  "image/gif":"gif"
 };
 
-//création d'un objet pour le "multer"
+//Dossier de stockage des fichiers
 const storage = multer.diskStorage({
-  //dossier dans lequel seront enregistré les fichiers
   destination: (req, file, callback) => {
-    callback(null, "images");
+    callback(null, "./images");
   },
-  //nom du fichier à utiliser
   filename: (req, file, callback) => {
-    //nouveau nom de fichier à partir du originalName
-    const name = file.originalname.split(".")[0];
-    //newName
-    const newName = name.split(" ").join("_");
-    //extansion (jpg, png, jpeg) (MIME_TYPES)
+    const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, newName + "_" + Date.now() + "." + extension);
+    callback(null, name + Date.now() + "." + extension);
   },
 });
 
-//exportation (une seule image)
 module.exports = multer({ storage: storage }).single("image");

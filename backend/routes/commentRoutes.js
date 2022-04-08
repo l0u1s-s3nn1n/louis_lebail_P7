@@ -1,22 +1,17 @@
-
-//package "express"
+//Import
 const express = require("express");
-
-//"router" pour les routes "sauce"
+//Permets de gérer les routes
 const router = express.Router();
-
-// "auth.js" pour la vérification des tokens
+//Controller
+const commentCtrl = require("../controllers/commentControllers");
+//const { checkPreviousPost } = require("../controllers/postController");
+//Import du middle d'authentifictaion pour les accès aux routes
 const auth = require("../middlewares/authMiddlewares");
 
-//controllers/sauce
-const commentController = require("../controllers/commentControllers");
+//Définition des routes de l'API
+router.get("/", auth, commentCtrl.getAllComments);
+router.post("/", auth, commentCtrl.createComment);
+router.put("/:id", auth, commentCtrl.checkPreviousComment, commentCtrl.modifyComment);
+router.delete("/:id", auth, commentCtrl.checkPreviousComment, commentCtrl.deleteComment);
 
-//routes pour "sauce"
-router.get("/:id/", auth, commentController.getAllComment);
-router.post("/", auth, multer, commentController.createComment);
-router.put("/:id", auth, multer, commentController.modifyComment);
-router.delete("/:id", auth, commentController.deleteComment);
-//router.post("/:id/like", commentController.modifyLikeComment);
-
-//exportation router
 module.exports = router;

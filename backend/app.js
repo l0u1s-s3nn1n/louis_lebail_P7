@@ -1,94 +1,35 @@
-const sequelize = require("./database/database");
-const User = require("./models/userModels");
- 
+//Imports
 const express = require('express');
-
-const app = express();
-const dotenv = require("dotenv");
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const helmet = require("helmet");
 const path = require('path');
-const auth = require("./middlewares/authMiddlewares");
+const sequelize = require("./config/database");
 
-dotenv.config();
+//Routes
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
-app.use(bodyParser.json());
+sequelize.sync({ force: false }).then(() => console.log("Base de données connectée"));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
-});
+//Création de l'app express
+const app = express();
 
-app.use("/images", express.static(path.join(__dirname, "images")));
-
-
-const userRoutes = require("./routes/userRoutes");
-
-//app.use("/api/auth", userRoutes);
-
-
-
-
-
-
-
-
-
-
-dotenv.config();
-
-
-
-
-
-app.use(cors());
-
-app.use(bodyParser.json());
-
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,//corrige erreur console
-    // ...
-  })
-);
-
-app.get("/", (req, resp) => resp.send("application is up and running"));
- 
-app.use("/api", userRoutes.routes);
-
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
+//CORS 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-  });
-  
-app.use((req, res) => {
-   res.json({ message: 'Votre requête a bien été reçue !' }); 
 });
 
+//Parsing des requêtes en JSON
+app.use(express.json());
 
+//Gestion des fichiers avec le multer
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//app.use("/api/user", userRoutes);
-//app.use("/api/post", postRoutes);
-//app.use("/api/comment", commentRoutes);
-//app.use("/images", express.static(path.join(__dirname, "images")));
-
+//Routes de l'API
+app.use("/api/auth", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 module.exports = app;
-

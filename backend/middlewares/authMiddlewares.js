@@ -1,29 +1,28 @@
-//Protéger route post et messages et dans user : getall getone update delete
-//non protégé conexion et ajout user.
-//modérateur.
+//Import
+const jwt = require("jsonwebtoken");//gestion des jetons 
 
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+//Model
+const User = require("../models/userModel");
 
-const secretKey = process.env.TOKEN_KEY;
-
-module.exports = (req, res, next) => {
+//Middle d'authentification
+module.exports = async (req, res, next) => {
   try {
-    //récupération du token 
+    //décodage du token avec jwt
     const token = req.headers.authorization.split(" ")[1];
-    //décodage du token en objet et vérification 
-    const decodedToken = jwt.verify(token, `${secretKey}`);
-  
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
     const userId = decodedToken.userId;
-    //on vérifie que le userID venant du front = celui du token
-    if (req.body.userId && req.body.userId !== userId) {
-      throw "User ID invalide !";
+
+    const user = await User.findOne({ where: { id: userId } });
+    const isAdmin = user.isAdmin;
+    const uuid = user.uuid
+
+    req.auth = { uuid, isAdmin, userId };
+    if (req.body.uuid && req.body.uuid !== uuid && isAdmin===false) {
+      throw "Nom d'utilisateur incorrect";
     } else {
-      //si les "userId" sont les mêmes
       next();
     }
-  } catch {
-    //erreurs authentification
-    res.status(401).json({ error: new Error("Requête non authentifiée !") });
+  } catch (error) {
+    res.status(401).json({ error: error | "Accès refusé (auth)" });
   }
 };
